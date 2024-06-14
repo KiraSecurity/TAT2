@@ -5,7 +5,7 @@
 
 ############# project structure ############# ( current build ) 
 
-TAT2/
+ ``` TAT2/
 ├── backend/
 │   ├── Dockerfile
 │   ├── app.py
@@ -116,7 +116,7 @@ TAT2/
 ├── README.md
 └── setup.py
 
-
+```
 ## goal is for anybody to deploy the framework with the modules of their choice and they will deploy succesfully
 
 ### dependencies preventing immutability
