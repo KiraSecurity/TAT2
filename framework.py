@@ -1,7 +1,7 @@
 import os
 import sys
 import subprocess
-modules=[]
+
 cwd = os.getcwd()
 
 ## resets the local space and download golang in local framework directory and sets it (base framework to accept go code)
