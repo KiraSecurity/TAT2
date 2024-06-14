@@ -1,0 +1,6 @@
+{
+    // Other settings...
+    "files.associations": {
+        "*.tat": "python"
+    }
+}
