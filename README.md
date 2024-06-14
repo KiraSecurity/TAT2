@@ -1,5 +1,121 @@
 # TAT2
-an automated immutable framework for CTFs and Bug Bountys
+
+ ## an automated immutable framework for CTFs and Bug Bountys
+-NET
+
+############# project structure ############# ( current build ) 
+
+TAT2/
+├── backend/
+│   ├── Dockerfile
+│   ├── app.py
+│   ├── requirements.txt
+│   ├── database/
+│   │   └── init_db.py
+│   ├── models.py
+│   └── api/
+│       ├── __init__.py
+│       ├── routes.py
+│       ├── subdomain_enum.py
+│       ├── service_scan.py
+│       └── fuzzing.py
+├── frontend/
+│   ├── Dockerfile
+│   ├── package.json
+│   ├── yarn.lock
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── components/
+│   │   ├── styles/
+│   │   └── App.js
+├── modules/
+│   ├── Dockerfile
+│   ├── universal_sanitizer/
+│   │   └── universal_sanitizer.py
+│   ├── enumeration/
+│   │   ├── amass_module/
+│   │   │   └── amass_module.py
+│   │   ├── subfinder_module/
+│   │   │   └── subfinder_module.py
+│   │   ├── nmap_module/
+│   │   │   └── nmap_module.py
+│   │   ├── masscan_module/
+│   │   │   └── masscan_module.py
+│   │   ├── hakrawler_module/
+│   │   │   └── hakrawler_module.py
+│   │   ├── gospider_module/
+│   │   │   └── gospider_module.py
+│   │   ├── whois_module/
+│   │   │   └── whois_module.py
+│   │   ├── dnsenum_module/
+│   │   │   └── dnsenum_module.py
+│   │   └── dnsrecon_module/
+│   │       └── dnsrecon_module.py
+│   ├── vulnerability_scanning/
+│   │   ├── zap_module/
+│   │   │   └── zap_module.py
+│   │   ├── nikto_module/
+│   │   │   └── nikto_module.py
+│   │   ├── nessus_module/
+│   │   │   └── nessus_module.py
+│   │   ├── openvas_module/
+│   │   │   └── openvas_module.py
+│   │   ├── wpscan_module/
+│   │   │   └── wpscan_module.py
+│   │   └── joomscan_module/
+│   │       └── joomscan_module.py
+│   ├── exploitation/
+│   │   ├── metasploit_module/
+│   │   │   └── metasploit_module.py
+│   │   ├── hashcat_module/
+│   │   │   └── hashcat_module.py
+│   │   ├── john_module/
+│   │   │   └── john_module.py
+│   │   ├── sqlmap_module/
+│   │   │   └── sqlmap_module.py
+│   │   └── xsser_module/
+│   │       └── xsser_module.py
+│   ├── information_gathering/
+│   │   ├── twint_module/
+│   │   │   └── twint_module.py
+│   │   ├── theharvester_module/
+│   │   │   └── theharvester_module.py
+│   │   └── maltego_module/
+│   │       └── maltego_module.py
+│   ├── reporting/
+│   │   ├── dradis_module/
+│   │   │   └── dradis_module.py
+│   │   ├── mdreport_module/
+│   │   │   └── mdreport_module.py
+│   │   └── pdfreport_module/
+│   │       └── pdfreport_module.py
+│   ├── automation/
+│   │   ├── autoenum_module/
+│   │   │   └── autoenum_module.py
+│   │   └── autoscan_module/
+│   │       └── autoscan_module.py
+│   └── utility/
+│       ├── httprobe_module/
+│       │   └── httprobe_module.py
+│       ├── crtsh_module/
+│       │   └── crtsh_module.py
+│       ├── aquatone_module/
+│       │   └── aquatone_module.py
+│       └── cewl_module/
+│           └── cewl_module.py
+├── tests/
+│   ├── test_app.py
+│   └── test_modules.py
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml
+├── .gitignore
+├── docker-compose.yml
+├── LICENSE
+├── README.md
+└── setup.py
+
 
 ## goal is for anybody to deploy the framework with the modules of their choice and they will deploy succesfully
 
