@@ -1,4 +1,4 @@
-# TST2
+# TAT2
 an automated immutable framework for CTFs and Bug Bountys
 
 ## goal is for anybody to deploy the framework with the modules of their choice and they will deploy succesfully
