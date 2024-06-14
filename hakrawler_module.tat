@@ -15,7 +15,7 @@ os.system(f'{cwd}/go/bin/go install -v github.com/hakluke/hakrawler@latest')
 os.environ['PATH'] = f'{cwd}/bin:' + os.environ['PATH']
 try:
     output=os.popen(f'script -q -c "cat abs_urls.txt | {cwd}/bin/hakrawler -subs" hakrawler_output.txt').read()
-except:
+except Exception as e:
     domain = input("insert SINGLE domain you would like to run hakrawler scanner on INCLUDE HTTPS: ")
     output = os.popen(f'script -q -c "echo {domain} | {cwd}/bin/hakrawler -subs" hakrawler_output.txt').read()
 finally:

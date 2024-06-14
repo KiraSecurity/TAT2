@@ -18,7 +18,7 @@ os.environ['PATH'] = f'{cwd}/bin:' + os.environ['PATH']
 try:
     output = os.popen(f'script -q -c "{cwd}/bin/amass enum -d {domain} -timeout 1" amass_output.txt').read()
     urls = set(re.findall(r"(?:https?://)?(?:[-\w]+\.)*{}(?:[-\w./?%&=]*)".format(re.escape(domain)), output))
-except:
+except Exception as e:
     print("amass failed to execute")
 
 with open('urls.txt', 'w') as f:

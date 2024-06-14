@@ -13,12 +13,12 @@ os.environ['GOPATH'] = cwd
 os.system(f'{cwd}/go/bin/go install -v github.com/tomnomnom/httprobe@latest')
 os.environ['PATH'] = f'{cwd}/bin:' + os.environ['PATH']
 try:
-    output = print(os.popen(f'script -q -c "cat urls.txt | {cwd}/bin/httprobe" httprobe_output.txt').read())
-except:
+    output = os.popen(f'script -q -c "cat urls.txt | {cwd}/bin/httprobe" httprobe_output.txt').read()
+except Exception as e:
     domain = input("insert SINGLE domain you would like to run httprobe scanner on: ")
     domain = re.sub(r'^https?://', '', domain)
     output = os.popen(f'script -q -c "echo {domain} | {cwd}/bin/httprobe" httprobe_output.txt').read()
-    print(output)
+    #print(output)
 finally:
     print("httprobe has completed")
 
