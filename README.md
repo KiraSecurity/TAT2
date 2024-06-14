@@ -9,6 +9,7 @@ module output (txt file currently, possibly database tags). Biggest current issu
 
 module dependency for inputs (eg. httprobe module requires http/s protocol to be added to url, should be accounted for that not all subdomain finders will add those)
 
+Modules will also need to mark their tools executing language, all modules are writen in python but the tool might be in GO, need to be compiled, etc. 
 
 module groups and work-flow requirements (sub-domain enumerators, fuzzers, etc.)
 
