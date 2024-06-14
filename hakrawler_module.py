@@ -12,6 +12,7 @@ os.environ['GOPATH'] = cwd
 #####REQUIRED FOR MODULES######
 print(os.system(f'{cwd}/go/bin/go install -v github.com/hakluke/hakrawler@latest'))
 os.environ['PATH'] = f'{cwd}/bin:' + os.environ['PATH']
+
 intel=os.popen(f'script -q -c "cat abs_urls.txt | {cwd}/bin/hakrawler -subs" hakrawler_output.txt').read()
 
 with open('hak.txt', 'w') as f:
