@@ -1,4 +1,8 @@
 #category: url prober
+#input dependencies: domain(s) 
+
+#metadata is first two lines in code
+
 #Modules should be designed to be independant of one another, include ALL requirements
 #Modules also always need to include the cwd variable, and pending required language should include the correlated PATH and language path
 #####REQUIRED FOR MODULES######
@@ -12,15 +16,15 @@ os.environ['GOPATH'] = cwd
 #####REQUIRED FOR MODULES######
 os.system(f'{cwd}/go/bin/go install -v github.com/tomnomnom/httprobe@latest')
 os.environ['PATH'] = f'{cwd}/bin:' + os.environ['PATH']
-try:
+if os.path.exists('abs_urls.txt'):
     output = os.popen(f'script -q -c "cat urls.txt | {cwd}/bin/httprobe" httprobe_output.txt').read()
-except Exception as e:
+else:
     domain = input("insert SINGLE domain you would like to run httprobe scanner on: ")
     domain = re.sub(r'^https?://', '', domain)
     output = os.popen(f'script -q -c "echo {domain} | {cwd}/bin/httprobe" httprobe_output.txt').read()
     #print(output)
-finally:
-    print("httprobe has completed")
+
+print("httprobe has completed")
 
 with open('abs_urls.txt', 'w') as f:
         if output != None:

@@ -1,4 +1,8 @@
 #category:subdomain discovery
+#input dependencies: domain(s)
+
+#metadata is first two lines in code
+
 #Modules should be designed to be independant of one another, include ALL requirements
 #Modules also always need to include the cwd variable, and pending required language should include the correlated PATH and language path
 
@@ -11,7 +15,7 @@ os.environ['PATH'] = f'{cwd}/go/bin:' + os.environ['PATH']
 os.environ['GOPATH'] = cwd
 #####REQUIRED FOR MODULES######
 
-domain = input("insert SINGLE domain you would like to run" + f'\033[92m Amass Scanner\033[0m'+" on: ")
+domain = input("\ninsert SINGLE domain you would like to run" + f'\033[92m Amass Scanner\033[0m'+" on: ")
 
 print(os.system(f'{cwd}/go/bin/go install -v github.com/owasp-amass/amass/v4/...@master'))
 os.environ['PATH'] = f'{cwd}/bin:' + os.environ['PATH']
