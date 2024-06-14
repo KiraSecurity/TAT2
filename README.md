@@ -1,9 +1,11 @@
-# TST2
+# TAT2
 an automated immutable framework for CTFs and Bug Bountys
 
 ## goal is for anybody to deploy the framework with the modules of their choice and they will deploy succesfully
 
 ### dependencies preventing immutability
+
+for modules they should be a directory with main code as well as requireed imports and specified version numbers
 
 module output (txt file currently, possibly database tags). Biggest current issue is modules have to be loaded in a specified order because they are retreiving input from hard-coded input file.
 

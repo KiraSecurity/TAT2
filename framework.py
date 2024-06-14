@@ -18,12 +18,12 @@ print(os.system('go version'))
 print("finished go lang script acceptance")
 
 def prompt():
-    module= input("include module name you would like to add: ")
-    module2= input("include second module name you would like to add: ")
-    module3= input("include third module name you would like to add: ")
-    subprocess.run(["python3", module])
-    subprocess.run(["python3", module2])
-    subprocess.run(["python3", module3])
+    #module= input("include module name you would like to add: ")
+    #module2= input("include second module name you would like to add: ")
+    #module3= input("include third module name you would like to add: ")
+    #subprocess.run(["python3", module])
+    #subprocess.run(["python3", module2])
+    #subprocess.run(["python3", module3])
 
-if __name__ == "__main__":
-    prompt()
+    if __name__ == "__main__":
+        prompt()
