@@ -1,2 +1,0 @@
-bash: line 1: /home/flaxo/TAT2/bin/hakrawler: No such file or directory
-cat: abs_urls.txt: No such file or directory
