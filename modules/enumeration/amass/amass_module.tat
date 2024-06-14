@@ -1,5 +1,6 @@
 #category:subdomain discovery
 #input dependencies: domain(s)
+#language: go
 
 #metadata is first two lines in code
 
@@ -11,16 +12,22 @@ import os
 import sys
 import re
 cwd = os.getcwd() 
-os.environ['PATH'] = f'{cwd}/go/bin:' + os.environ['PATH']
-os.environ['GOPATH'] = cwd
+
 #####REQUIRED FOR MODULES######
+go_bin_path = f'{cwd}/bins/go/bin'
+amass_bin_path = f'{cwd}/modules/enumeration/amass/bin'  # Ensure this points to a directory for binaries
+# Create the directory if it doesn't exist
+os.makedirs(amass_bin_path, exist_ok=True)
+# Set environment variables
+os.environ['PATH'] = f'{go_bin_path}:{amass_bin_path}:' + os.environ['PATH']
+os.environ['GOPATH'] = cwd
+os.environ['GOBIN'] = amass_bin_path
 
 domain = input("\ninsert SINGLE domain you would like to run" + f'\033[92m Amass Scanner\033[0m'+" on: ")
 
-print(os.system(f'{cwd}/go/bin/go install -v github.com/owasp-amass/amass/v4/...@master'))
-os.environ['PATH'] = f'{cwd}/bin:' + os.environ['PATH']
+print(os.system(f'{cwd}/bins/go/bin/go install -v github.com/owasp-amass/amass/v4/...@master'))
 try:
-    output = os.popen(f'script -q -c "{cwd}/bin/amass enum -d {domain} -timeout 1" amass_output.txt').read()
+    output = os.popen(f'script -q -c "{amass_bin_path}/amass enum -d {domain} -timeout 1" amass_output.txt').read()
     urls = set(re.findall(r"(?:https?://)?(?:[-\w]+\.)*{}(?:[-\w./?%&=]*)".format(re.escape(domain)), output))
 except Exception as e:
     print("amass failed to execute")

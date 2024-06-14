@@ -1,0 +1,32 @@
+#category: url prober
+#input dependencies: domain(s) 
+#language: go
+#####REQUIRED FOR MODULES######
+import os
+import sys
+import re
+##### REQUIRED FOR MODULES #####
+cwd = os.getcwd()
+go_bin_path = f'{cwd}/bins/go/bin'
+httprobe_bin_path = f'{cwd}/modules/enumeration/httprobe/bin'  # Ensure this points to a directory for binaries
+# Create the directory if it doesn't exist
+os.makedirs(httprobe_bin_path, exist_ok=True)
+# Set environment variables
+os.environ['PATH'] = f'{go_bin_path}:{httprobe_bin_path}:' + os.environ['PATH']
+os.environ['GOPATH'] = cwd
+os.environ['GOBIN'] = httprobe_bin_path
+##### REQUIRED FOR MODULES #####
+os.system(f'{cwd}/bins/go/bin/go install -v github.com/tomnomnom/httprobe@latest')
+if os.path.exists('abs_urls.txt'):
+    output = os.popen(f'script -q -c "cat urls.txt |  {httprobe_bin_path}/httprobe" httprobe_output.txt').read()
+else:
+    domain = input("insert SINGLE domain you would like to run httprobe scanner on: ")
+    domain = re.sub(r'^https?://', '', domain)
+    output = os.popen(f'script -q -c "echo {domain} |  {httprobe_bin_path}/httprobe" httprobe_output.txt').read()
+    #print(output)
+
+print("httprobe has completed")
+
+with open('abs_urls.txt', 'w') as f:
+        if output != None:
+            f.write(str(output))

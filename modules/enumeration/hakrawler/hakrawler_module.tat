@@ -1,0 +1,31 @@
+#category: crawler
+#input dependencies: full urls 
+#language: go
+
+#####REQUIRED FOR MODULES######
+import os
+import sys
+import re
+##### REQUIRED FOR MODULES #####
+cwd = os.getcwd()
+go_bin_path = f'{cwd}/bins/go/bin'
+hakrawler_bin_path = f'{cwd}/modules/enumeration/hakrawler/bin'  # Ensure this points to a directory for binaries
+# Create the directory if it doesn't exist
+os.makedirs(hakrawler_bin_path, exist_ok=True)
+# Set environment variables
+os.environ['PATH'] = f'{go_bin_path}:{hakrawler_bin_path}:' + os.environ['PATH']
+os.environ['GOPATH'] = cwd
+os.environ['GOBIN'] = hakrawler_bin_path
+##### REQUIRED FOR MODULES #####
+os.system(f'{cwd}/bins/go/bin/go install -v github.com/hakluke/hakrawler@latest')
+if os.path.exists('abs_urls.txt'):
+    output = os.popen(f'script -q -c "cat abs_urls.txt | {hakrawler_bin_path}/hakrawler -subs" hakrawler_output.txt').read()
+else:
+    domain = input("insert SINGLE domain you would like to run hakrawler scanner on INCLUDE HTTPS: ")
+    output = os.popen(f'script -q -c "echo {domain} | {hakrawler_bin_path}/hakrawler -subs" hakrawler_output.txt').read()
+    
+print("hakrawler has completed")
+
+with open('hak.txt', 'w') as f:
+    if output != None: #need to remove any non in-scope domains
+        f.write(str(output))
