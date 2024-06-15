@@ -26,7 +26,7 @@ try:
 except Exception as e:
     print("name failed to execute")
 
-with open('{name}.txt', 'w') as f:
+with open('file.txt', 'w') as f:
     if output != None:
         f.write('\n'.join((output)))
 
