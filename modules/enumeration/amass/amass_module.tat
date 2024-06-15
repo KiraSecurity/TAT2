@@ -2,11 +2,6 @@
 #input dependencies: domain(s)
 #language: go
 
-#metadata is first two lines in code
-
-#Modules should be designed to be independant of one another, include ALL requirements
-#Modules also always need to include the cwd variable, and pending required language should include the correlated PATH and language path
-
 #####REQUIRED FOR MODULES######
 import os
 import sys
