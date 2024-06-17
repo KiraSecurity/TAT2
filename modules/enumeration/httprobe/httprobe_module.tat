@@ -33,7 +33,7 @@ try:
     else:
         domain = input("insert SINGLE domain you would like to run httprobe scanner on: ")
         domain = re.sub(r'^https?://', '', domain)
-        command = f'cat {domain} |  {httprobe_bin_path}/httprobe'
+        command = f'echo {domain} |  {httprobe_bin_path}/httprobe'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
 

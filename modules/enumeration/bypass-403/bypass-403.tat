@@ -1,0 +1,74 @@
+# category: bypass
+# input dependencies: URL list from abs_urls.txt
+# language: bash
+
+##### REQUIRED FOR MODULES #####
+import os
+import re
+import subprocess
+
+# Define paths
+cwd = os.getcwd()
+bypass_403_bin_path = f'{cwd}/modules/bypass-403/bin'
+
+# Ensure the directory for binaries exists
+os.makedirs(bypass_403_bin_path, exist_ok=True)
+
+# Set environment variables
+os.environ['PATH'] = f'{bypass_403_bin_path}:' + os.environ['PATH']
+
+# Install necessary dependencies
+install_commands = [
+    f"git clone https://github.com/iamj0ker/bypass-403 {bypass_403_bin_path}",
+    f"chmod +x {bypass_403_bin_path}/bypass-403.sh"
+]
+
+for command in install_commands:
+    os.system(command)
+
+##### REQUIRED FOR MODULES #####
+
+# Function to run the bypass-403 script
+def run_bypass_403(url):
+    try:
+        command = f'{bypass_403_bin_path}/bypass-403.sh {url} /'
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        output_lines = result.stdout.splitlines()
+        
+        # Filter for successful bypasses (status code 200)
+        successful_bypasses = [line for line in output_lines if '200,' in line]
+
+        # Save the output to a file if there are successful bypasses
+        if successful_bypasses:
+            with open('bypass-403-output.txt', 'a') as f:
+                for line in successful_bypasses:
+                    f.write(line + '\n')
+
+    except Exception as e:
+        print("bypass-403 failed to execute:")
+        print(e)
+
+# Function to read URLs from file and filter those with 403 status
+def read_and_filter_urls(file_path):
+    urls_with_403 = []
+    try:
+        with open(file_path, 'r') as f:
+            lines = f.readlines()
+            for line in lines:
+                # Check for lines with status code 403
+                match = re.search(r'(https?://[^\s]+) \[403\]', line)
+                if match:
+                    urls_with_403.append(match.group(1))
+    except Exception as e:
+        print("Failed to read URLs from file:")
+        print(e)
+    
+    return urls_with_403
+
+# Main execution
+
+urls_file = 'abs_urls.txt'
+urls_to_bypass = read_and_filter_urls(urls_file)
+
+for url in urls_to_bypass:
+    run_bypass_403(url)

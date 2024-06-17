@@ -27,13 +27,13 @@ os.system(install_command)
 
 try:
     if os.path.exists('urls.txt'):
-        command = f'{httpx_bin_path}/httpx -status-code -list urls.txt -t 10'
+        command = f'{httpx_bin_path}/httpx -status-code -list urls.txt -t 10 -nc'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         print(result)
     else:
         domain = input("insert SINGLE domain you would like to run httpx scanner on: ")
         domain = re.sub(r'^https?://', '', domain)
-        command = f'{httpx_bin_path}/httpx -status-code '
+        command = f'{httpx_bin_path}/httpx -status-code {domain} '
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
 

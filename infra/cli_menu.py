@@ -23,10 +23,10 @@ def menu(library):
 
     #print(module_dict)
     while True:
-
-        choice = input("Select the tool you would like to run first, or type 4 to run suggested chain: ")
+        total=len(module_dict)+1
+        choice = input(f'"Select the tool you would like to run first, or type {total} to run suggested chain: "')
         if choice.isdigit():
-            if choice == "5":
+            if choice == total:
                 choice = 1
                 for module in module_dict:
                     while choice <= len(module_dict):
