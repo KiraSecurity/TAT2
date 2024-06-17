@@ -10,7 +10,7 @@ def menu(library):
     module_dict = {}
     print('\n'"Welcome to TAT2!")
     print("Here are the modules you have loaded:"'\n')
-    keyorder = ['subdomain discovery', 'url prober', 'crawler','fuzzer']
+    keyorder = ['subdomain discovery', 'url prober', 'crawler','fuzzer','bypass']
     chain_lib=sorted(library.items(), key=lambda i:keyorder.index(i[0]))
 # Iterate through the sorted categories
     print(chain_lib)
