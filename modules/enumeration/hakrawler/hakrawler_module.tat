@@ -29,7 +29,7 @@ try:
         command = f'cat {domain} |  {hakrawler_bin_path}/hakrawler -subs'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
     
-    with open('hak.txt', 'w') as f:
+    with open('absolute_endpoints.txt', 'w') as f:
         f.write((str(result.stdout)))
 
 except Exception as e:

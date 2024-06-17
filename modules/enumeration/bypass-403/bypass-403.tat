@@ -1,6 +1,6 @@
-# category: bypass
-# input dependencies: URL list from abs_urls.txt
-# language: bash
+#category: bypass
+#input dependencies: URL list from abs_urls.txt
+#language: bash
 
 ##### REQUIRED FOR MODULES #####
 import os
