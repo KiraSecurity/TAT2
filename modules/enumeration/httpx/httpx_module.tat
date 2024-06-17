@@ -1,0 +1,48 @@
+#category: url prober
+#input dependencies: domain
+#language: go
+#####REQUIRED FOR MODULES######
+import os
+import re
+import subprocess
+##### REQUIRED FOR MODULES #####
+# Set the current working directory
+cwd = os.getcwd()
+
+# Define the paths
+go_bin_path = f'{cwd}/bins/go/bin'
+httpx_bin_path = f'{cwd}/modules/enumeration/httpx/bin'
+
+# Create the directory if it doesn't exist
+os.makedirs(httpx_bin_path, exist_ok=True)
+
+# Set environment variables
+os.environ['PATH'] = f'{go_bin_path}:{httpx_bin_path}:' + os.environ['PATH']
+os.environ['GOPATH'] = cwd
+os.environ['GOBIN'] = httpx_bin_path
+
+# Install httpx if not already installed
+install_command = f'{go_bin_path}/go install -v github.com/projectdiscovery/httpx/cmd/httpx@latest'
+os.system(install_command)
+
+try:
+    if os.path.exists('urls.txt'):
+        command = f'{httpx_bin_path}/httpx -status-code -list urls.txt -t 10'
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        print(result)
+    else:
+        domain = input("insert SINGLE domain you would like to run httpx scanner on: ")
+        domain = re.sub(r'^https?://', '', domain)
+        command = f'{httpx_bin_path}/httpx -status-code '
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+
+    # Save the URLs to a file
+    with open('abs_urls.txt', 'w') as f:
+        f.write((str(result.stdout)))
+
+except Exception as e:
+    print("httpx failed to execute:")
+    print(e)
+
+

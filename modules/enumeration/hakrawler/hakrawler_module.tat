@@ -1,11 +1,11 @@
 #category: crawler
 #input dependencies: full urls 
 #language: go
-
 #####REQUIRED FOR MODULES######
 import os
 import sys
 import re
+import subprocess
 ##### REQUIRED FOR MODULES #####
 cwd = os.getcwd()
 go_bin_path = f'{cwd}/bins/go/bin'
@@ -17,15 +17,21 @@ os.environ['PATH'] = f'{go_bin_path}:{hakrawler_bin_path}:' + os.environ['PATH']
 os.environ['GOPATH'] = cwd
 os.environ['GOBIN'] = hakrawler_bin_path
 ##### REQUIRED FOR MODULES #####
-os.system(f'{cwd}/bins/go/bin/go install -v github.com/hakluke/hakrawler@latest')
-if os.path.exists('abs_urls.txt'):
-    output = os.popen(f'script -q -c "cat abs_urls.txt | {hakrawler_bin_path}/hakrawler -subs" hakrawler_output.txt').read()
-else:
-    domain = input("insert SINGLE domain you would like to run hakrawler scanner on INCLUDE HTTPS: ")
-    output = os.popen(f'script -q -c "echo {domain} | {hakrawler_bin_path}/hakrawler -subs" hakrawler_output.txt').read()
+install_command = f'{go_bin_path}/go install -v github.com/hakluke/hakrawler@latest'
+os.system(install_command)
+try:
+    if os.path.exists('abs_urls.txt'):
+        command = f' cat abs_urls.txt |  {hakrawler_bin_path}/hakrawler -subs'
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        print(result)
+    else:
+        domain = input("insert SINGLE domain you would like to run hakrawler scanner on: ")
+        command = f'cat {domain} |  {hakrawler_bin_path}/hakrawler -subs'
+        result = subprocess.run(command, shell=True, capture_output=True, text=True)
     
-print("hakrawler has completed")
+    with open('hak.txt', 'w') as f:
+        f.write((str(result.stdout)))
 
-with open('hak.txt', 'w') as f:
-    if output != None: #need to remove any non in-scope domains
-        f.write(str(output))
+except Exception as e:
+    print("httprobe failed to execute:")
+    print(e)

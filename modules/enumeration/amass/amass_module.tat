@@ -2,34 +2,54 @@
 #input dependencies: domain(s)
 #language: go
 
-#####REQUIRED FOR MODULES######
 import os
-import sys
 import re
-cwd = os.getcwd() 
+import subprocess
 
-#####REQUIRED FOR MODULES######
+# Set the current working directory
+cwd = os.getcwd()
+
+# Define the paths
 go_bin_path = f'{cwd}/bins/go/bin'
-amass_bin_path = f'{cwd}/modules/enumeration/amass/bin'  # Ensure this points to a directory for binaries
+amass_bin_path = f'{cwd}/modules/enumeration/amass/bin'
+
 # Create the directory if it doesn't exist
 os.makedirs(amass_bin_path, exist_ok=True)
+
 # Set environment variables
 os.environ['PATH'] = f'{go_bin_path}:{amass_bin_path}:' + os.environ['PATH']
 os.environ['GOPATH'] = cwd
 os.environ['GOBIN'] = amass_bin_path
 
-domain = input("\ninsert SINGLE domain you would like to run" + f'\033[92m Amass Scanner\033[0m'+" on: ")
+# Install amass if not already installed
+install_command = f'{go_bin_path}/go install -v github.com/owasp-amass/amass/v4/...@master'
+os.system(install_command)
 
-print(os.system(f'{cwd}/bins/go/bin/go install -v github.com/owasp-amass/amass/v4/...@master'))
+# Get the domain from user input
+domain = input("Insert SINGLE domain you would like to run Amass Scanner on: ")
+
+# Define the command to run amass
+command = f'{amass_bin_path}/amass enum -d {domain} -timeout 1'
+
 try:
-    output = os.popen(f'script -q -c "{amass_bin_path}/amass enum -d {domain} -timeout 1" amass_output.txt').read()
-    urls = set(re.findall(r"(?:https?://)?(?:[-\w]+\.)*{}(?:[-\w./?%&=]*)".format(re.escape(domain)), output))
+    # Run the command and capture the output
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+
+    # Extract URLs from the result
+    urls = set(re.findall(r"(?:https?://)?(?:[-\w]+\.)*{}(?:[-\w./?%&=]*)".format(re.escape(domain)), result.stdout))
+
+    #rint the output
+    #print("Command Output:")
+    #print(result.stdout)
+    #print("Extracted URLs:")
+    #print(urls)
+
+    # Save the URLs to a file
+    with open('urls.txt', 'w') as f:
+        f.write('\n'.join(urls))
+
 except Exception as e:
-    print("amass failed to execute")
+    print("Amass failed to execute:")
+    print(e)
 
-with open('urls.txt', 'w') as f:
-    if urls != None:
-        f.write('\n'.join((urls)))
-
-##sanitization##
 
