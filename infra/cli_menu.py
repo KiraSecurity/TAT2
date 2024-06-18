@@ -1,12 +1,18 @@
-
-
 import os
 import subprocess
-
+import re
 def execute_modules(modules):
     print(modules)
     subprocess.run(["python3", modules], check=True)
+    subprocess.run(["python3", "parse_output.py"], check=True)
 
+def check_module_dependency(dependency):
+    if os.path.exists(dependency):
+        print(f'"{dependency} exists"')
+        return True
+    else:
+        print(f"\n{dependency} not found, select another module or continue with single URL")
+        
 def menu(library):
     i = 0
     module_dict = {}
@@ -18,33 +24,38 @@ def menu(library):
     print(chain_lib)
     print("\nsuggest chaining order is as follows:" )
     for category, modules in chain_lib:
-        for module, info in modules.items():
+        for module, dependency, in modules.items():
             i += 1
-            module_dict[i] = (category, module)
-            print(f"{category}\n{i}  {module}")
+            module_dict[i] = (category, module, dependency)
+            print(f"{category}\n{i}  {module}  ")
 
     while True:
-        choice = input(f'Select the tool you would like to run first, or type 7 to run suggested chain: ')
+        choice = input(f'\nSelect the tool you would like to run first, or type 7 to run suggested chain: ')
         if choice.isdigit():
             choice = int(choice)
             if choice == 7:
                 choice = 1
                 while choice <= len(module_dict):
-                    category, selector = module_dict[choice]
-                    execute_modules(selector)
-                    # Automatically run all URL probers after any crawler
-                    if category == "crawler":
-                        url_prober_selectors = [mod for cat, mod in module_dict.values() if cat == "url prober"]
-                        for url_prober_selector in url_prober_selectors:
-                            execute_modules(url_prober_selector)
-                    choice += 1
+                    category, selector,dependency = module_dict[choice]
+                    print(f"\nThe dependency for {selector} is {dependency[0]}\n")
+                    if check_module_dependency(dependency[0]):
+                        execute_modules(selector)
+                    else:
+                        dependent = dependency[0]
+                        for module, (category, info, output) in module_dict.items():
+                           
+                            if dependent == output[1]:
+                                print(f"\n{info} is suggested to run prior\n") 
+                    choice +=1
             else:
-                category, selector = module_dict[choice]
-                execute_modules(selector)
-                # Automatically run all URL probers after any crawler
-                if category == "crawler":
-                    url_prober_selectors = [mod for cat, mod in module_dict.values() if cat == "url prober"]
-                    for url_prober_selector in url_prober_selectors:
-                        execute_modules(url_prober_selector)
-                print("All done here in menu")
+                category, selector,dependency = module_dict[choice]
+                print(f"The dependency for {selector} is {dependency[0]}")
+                if check_module_dependency(dependency[0]):
+                    execute_modules(selector)
+                    continue
+                else:
+                    dependent = dependency[0]
+                    for module, (category, info, output) in module_dict.items():
+                        if dependent == output[1]:
+                            print(f"\n {info}is suggested to run prior\n") 
 

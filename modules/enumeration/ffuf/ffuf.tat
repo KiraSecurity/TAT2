@@ -1,6 +1,6 @@
 #category: fuzzer
-#input dependencies: full urls 
-#language: go
+#input dependencies: absolute_urls.txt
+#output: absolute_urls.txt
 #####REQUIRED FOR MODULES######
 import os
 import sys
@@ -27,11 +27,11 @@ try:
         for url in urls:
             url = url.strip()
             print(url)
-            command = f'{ffuf_bin_path}/ffuf -c -w /usr/share/wfuzz/wordlist/general/common.txt -u {url}/FUZZ -fc 301,302 -p 0.3-2.0 -t 10'
+            command = f'{ffuf_bin_path}/ffuf -c -w /usr/share/wfuzz/wordlist/general/common.txt -u {url}/FUZZ -fc 301,302 -p 0.3-2.0'
             result = subprocess.run(command, shell=True, capture_output=True, text=True, check=True)
-            print(result.stdout)
+            #print(result.stdout)
             
-            with open('ffuf.txt', 'a') as output_file:  # Use 'a' to append to the file
+            with open('outputs.txt', 'a') as output_file:  # Use 'a' to append to the file
                 output_file.write(f"URL: {url}\n")
                 output_file.write(result.stdout)
                 output_file.write("\n")

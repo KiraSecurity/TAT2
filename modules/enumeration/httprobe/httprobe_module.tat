@@ -1,6 +1,6 @@
 #category: url prober
-#input dependencies: domain
-#language: go
+#input dependencies: urls.txt
+#output: absolute_urls.txt
 #####REQUIRED FOR MODULES######
 import os
 import re
@@ -29,7 +29,7 @@ try:
     if os.path.exists('urls.txt'):
         command = f' cat urls.txt |  {httprobe_bin_path}/httprobe'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        print(result)
+        #print(result)
     else:
         domain = input("insert SINGLE domain you would like to run httprobe scanner on: ")
         domain = re.sub(r'^https?://', '', domain)
@@ -38,7 +38,7 @@ try:
 
 
     # Save the URLs to a file
-    with open('absolute_urls.txt', 'w') as f:
+    with open('outputs.txt', 'w') as f:
         f.write((str(result.stdout)))
 
 except Exception as e:

@@ -1,6 +1,6 @@
 #category: crawler
-#input dependencies: full urls 
-#language: go
+#input dependencies: absolute_urls.txt
+#output: absolute_urls.txt,endpoints_with_parameters.txt,js_endpoints.txt
 #####REQUIRED FOR MODULES######
 import os
 import sys
@@ -23,13 +23,13 @@ try:
     if os.path.exists('absolute_urls.txt'):
         command = f' cat absolute_urls.txt |  {hakrawler_bin_path}/hakrawler -subs'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        print(result)
+        #print(result)
     else:
         domain = input("insert SINGLE domain you would like to run hakrawler scanner on: ")
         command = f'cat {domain} |  {hakrawler_bin_path}/hakrawler -subs'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
     
-    with open('absolute_urls.txt', 'w') as f:
+    with open('outputs.txt', 'a') as f:
         f.write((str(result.stdout)))
 
 except Exception as e:

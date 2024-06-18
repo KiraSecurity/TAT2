@@ -1,7 +1,6 @@
-#category:subdomain discovery
-#input dependencies: domain(s)
-#language: go
-
+#category: subdomain discovery
+#input dependencies: urls.txt
+#output: urls.txt
 import os
 import re
 import subprocess
@@ -35,21 +34,10 @@ try:
     # Run the command and capture the output
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
 
-    # Extract URLs from the result
-    urls = set(re.findall(r"(?:https?://)?(?:[-\w]+\.)*{}(?:[-\w./?%&=]*)".format(re.escape(domain)), result.stdout))
-
-    #rint the output
-    #print("Command Output:")
-    #print(result.stdout)
-    #print("Extracted URLs:")
-    #print(urls)
-
-    # Save the URLs to a file
-    with open('urls.txt', 'w') as f:
-        f.write('\n'.join(urls))
+    # Save the raw output to a file
+    with open('outputs.txt', 'a') as f:
+        f.write(result.stdout)
 
 except Exception as e:
     print("Amass failed to execute:")
     print(e)
-
-

@@ -1,6 +1,6 @@
 #category: bypass
-#input dependencies: URL list from absolute_urls.txt
-#language: bash
+#input dependencies: status_codes.txt
+#output: status_codes.txt
 
 ##### REQUIRED FOR MODULES #####
 import os
@@ -40,7 +40,7 @@ def run_bypass_403(url):
 
         # Save the output to a file if there are successful bypasses
         if successful_bypasses:
-            with open('bypass-403-output.txt', 'a') as f:
+            with open('outputs.txt', 'a') as f:
                 for line in successful_bypasses:
                     f.write(line + '\n')
 
@@ -56,7 +56,7 @@ def read_and_filter_urls(file_path):
             lines = f.readlines()
             for line in lines:
                 # Check for lines with status code 403
-                match = re.search(r'(https?://[^\s]+) \[403\]', line)
+                match = re.search(r'(https?://[^\s]+)\s*\[?403\]?', line)
                 if match:
                     urls_with_403.append(match.group(1))
     except Exception as e:
@@ -67,7 +67,7 @@ def read_and_filter_urls(file_path):
 
 # Main execution
 
-urls_file = 'abs_urls_status.txt'
+urls_file = 'status_codes.txt'
 urls_to_bypass = read_and_filter_urls(urls_file)
 
 for url in urls_to_bypass:

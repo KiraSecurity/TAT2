@@ -1,6 +1,6 @@
 #category: url prober
-#input dependencies: domain
-#language: go
+#input dependencies: urls.txt
+#output: status_codes.txt
 #####REQUIRED FOR MODULES######
 import os
 import re
@@ -27,9 +27,9 @@ os.system(install_command)
 
 try:
     if os.path.exists('absolute_urls.txt'):
-        command = f'{httpx_bin_path}/httpx -status-code -list absolute_urls.txt -t 10 -nc'
+        command = f'{httpx_bin_path}/httpx -status-code -list absolute_urls.txt  -nc'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
-        print(result)
+        #print(result)
     else:
         domain = input("insert SINGLE domain you would like to run httpx scanner on: ")
         domain = re.sub(r'^https?://', '', domain)
@@ -38,7 +38,7 @@ try:
 
 
     # Save the URLs to a file
-    with open('abs__urls_status.txt', 'w') as f:
+    with open('outputs.txt', 'w') as f:
         f.write((str(result.stdout)))
 
 except Exception as e:
