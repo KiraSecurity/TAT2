@@ -3,7 +3,7 @@ from infra.module_importer import get_modules, categorize_modules
 from infra.cli_menu import menu
 def deploy_framework():
     ##deploys golang binary for local framework
-    #setup_go()
+    setup_go()
     library = {}
     loaded_modules = get_modules()
     for module in loaded_modules:
