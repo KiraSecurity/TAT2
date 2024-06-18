@@ -20,8 +20,8 @@ os.environ['GOBIN'] = hakrawler_bin_path
 install_command = f'{go_bin_path}/go install -v github.com/hakluke/hakrawler@latest'
 os.system(install_command)
 try:
-    if os.path.exists('abs_urls.txt'):
-        command = f' cat abs_urls.txt |  {hakrawler_bin_path}/hakrawler -subs'
+    if os.path.exists('absolute_urls.txt'):
+        command = f' cat absolute_urls.txt |  {hakrawler_bin_path}/hakrawler -subs'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         print(result)
     else:
@@ -29,7 +29,7 @@ try:
         command = f'cat {domain} |  {hakrawler_bin_path}/hakrawler -subs'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
     
-    with open('absolute_endpoints.txt', 'w') as f:
+    with open('absolute_urls.txt', 'w') as f:
         f.write((str(result.stdout)))
 
 except Exception as e:

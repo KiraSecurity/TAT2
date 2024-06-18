@@ -2,5 +2,8 @@
     // Other settings...
     "files.associations": {
         "*.tat": "python"
-    }
+    },
+    "python.analysis.extraPaths": [
+        "./infra"
+    ]
 }

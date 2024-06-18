@@ -38,7 +38,7 @@ try:
 
 
     # Save the URLs to a file
-    with open('abs_urls.txt', 'w') as f:
+    with open('absolute_urls.txt', 'w') as f:
         f.write((str(result.stdout)))
 
 except Exception as e:

@@ -20,8 +20,8 @@ os.environ['GOBIN'] = ffuf_bin_path
 install_command = f'{go_bin_path}/go install -v github.com/ffuf/ffuf/v2@latest'
 os.system(install_command)
 try:
-    if os.path.exists('abs_urls.txt'):
-        with open('abs_urls.txt', 'r') as file:
+    if os.path.exists('absolute_urls.txt'):
+        with open('absolute_urls.txt', 'r') as file:
             urls = file.readlines()
         
         for url in urls:

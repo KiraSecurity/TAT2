@@ -1,5 +1,5 @@
 #category: bypass
-#input dependencies: URL list from abs_urls.txt
+#input dependencies: URL list from absolute_urls.txt
 #language: bash
 
 ##### REQUIRED FOR MODULES #####
@@ -67,7 +67,7 @@ def read_and_filter_urls(file_path):
 
 # Main execution
 
-urls_file = 'abs_urls.txt'
+urls_file = 'abs_urls_status.txt'
 urls_to_bypass = read_and_filter_urls(urls_file)
 
 for url in urls_to_bypass:

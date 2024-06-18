@@ -26,8 +26,8 @@ install_command = f'{go_bin_path}/go install -v github.com/projectdiscovery/http
 os.system(install_command)
 
 try:
-    if os.path.exists('urls.txt'):
-        command = f'{httpx_bin_path}/httpx -status-code -list urls.txt -t 10 -nc'
+    if os.path.exists('absolute_urls.txt'):
+        command = f'{httpx_bin_path}/httpx -status-code -list absolute_urls.txt -t 10 -nc'
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         print(result)
     else:
